@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8F0A5D522E8AD3A700D9D970 /* Chick Keeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chick Keeper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0A5D602E8AD3A900D9D970 /* Chick KeeperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chick KeeperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F0A5D6A2E8AD3A900D9D970 /* Chick KeeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chick KeeperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0A5D522E8AD3A700D9D970 /* ChickKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChickKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0A5D602E8AD3A900D9D970 /* ChickKeeperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChickKeeperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0A5D6A2E8AD3A900D9D970 /* ChickKeeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChickKeeperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -85,9 +85,9 @@
 		8F0A5D532E8AD3A700D9D970 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8F0A5D522E8AD3A700D9D970 /* Chick Keeper.app */,
-				8F0A5D602E8AD3A900D9D970 /* Chick KeeperTests.xctest */,
-				8F0A5D6A2E8AD3A900D9D970 /* Chick KeeperUITests.xctest */,
+				8F0A5D522E8AD3A700D9D970 /* ChickKeeper.app */,
+				8F0A5D602E8AD3A900D9D970 /* ChickKeeperTests.xctest */,
+				8F0A5D6A2E8AD3A900D9D970 /* ChickKeeperUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8F0A5D512E8AD3A700D9D970 /* Chick Keeper */ = {
+		8F0A5D512E8AD3A700D9D970 /* ChickKeeper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8F0A5D742E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "Chick Keeper" */;
+			buildConfigurationList = 8F0A5D742E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "ChickKeeper" */;
 			buildPhases = (
 				8F0A5D4E2E8AD3A700D9D970 /* Sources */,
 				8F0A5D4F2E8AD3A700D9D970 /* Frameworks */,
@@ -110,16 +110,16 @@
 			fileSystemSynchronizedGroups = (
 				8F0A5D542E8AD3A700D9D970 /* ChickenKeeper */,
 			);
-			name = "Chick Keeper";
+			name = ChickKeeper;
 			packageProductDependencies = (
 			);
 			productName = ChickenKeeper;
-			productReference = 8F0A5D522E8AD3A700D9D970 /* Chick Keeper.app */;
+			productReference = 8F0A5D522E8AD3A700D9D970 /* ChickKeeper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8F0A5D5F2E8AD3A900D9D970 /* Chick KeeperTests */ = {
+		8F0A5D5F2E8AD3A900D9D970 /* ChickKeeperTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8F0A5D772E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "Chick KeeperTests" */;
+			buildConfigurationList = 8F0A5D772E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "ChickKeeperTests" */;
 			buildPhases = (
 				8F0A5D5C2E8AD3A900D9D970 /* Sources */,
 				8F0A5D5D2E8AD3A900D9D970 /* Frameworks */,
@@ -133,16 +133,16 @@
 			fileSystemSynchronizedGroups = (
 				8F0A5D632E8AD3A900D9D970 /* ChickenKeeperTests */,
 			);
-			name = "Chick KeeperTests";
+			name = ChickKeeperTests;
 			packageProductDependencies = (
 			);
 			productName = ChickenKeeperTests;
-			productReference = 8F0A5D602E8AD3A900D9D970 /* Chick KeeperTests.xctest */;
+			productReference = 8F0A5D602E8AD3A900D9D970 /* ChickKeeperTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		8F0A5D692E8AD3A900D9D970 /* Chick KeeperUITests */ = {
+		8F0A5D692E8AD3A900D9D970 /* ChickKeeperUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8F0A5D7A2E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "Chick KeeperUITests" */;
+			buildConfigurationList = 8F0A5D7A2E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "ChickKeeperUITests" */;
 			buildPhases = (
 				8F0A5D662E8AD3A900D9D970 /* Sources */,
 				8F0A5D672E8AD3A900D9D970 /* Frameworks */,
@@ -156,11 +156,11 @@
 			fileSystemSynchronizedGroups = (
 				8F0A5D6D2E8AD3A900D9D970 /* ChickenKeeperUITests */,
 			);
-			name = "Chick KeeperUITests";
+			name = ChickKeeperUITests;
 			packageProductDependencies = (
 			);
 			productName = ChickenKeeperUITests;
-			productReference = 8F0A5D6A2E8AD3A900D9D970 /* Chick KeeperUITests.xctest */;
+			productReference = 8F0A5D6A2E8AD3A900D9D970 /* ChickKeeperUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8F0A5D4D2E8AD3A700D9D970 /* Build configuration list for PBXProject "Chick Keeper" */;
+			buildConfigurationList = 8F0A5D4D2E8AD3A700D9D970 /* Build configuration list for PBXProject "ChickKeeper" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +200,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8F0A5D512E8AD3A700D9D970 /* Chick Keeper */,
-				8F0A5D5F2E8AD3A900D9D970 /* Chick KeeperTests */,
-				8F0A5D692E8AD3A900D9D970 /* Chick KeeperUITests */,
+				8F0A5D512E8AD3A700D9D970 /* ChickKeeper */,
+				8F0A5D5F2E8AD3A900D9D970 /* ChickKeeperTests */,
+				8F0A5D692E8AD3A900D9D970 /* ChickKeeperUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		8F0A5D622E8AD3A900D9D970 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8F0A5D512E8AD3A700D9D970 /* Chick Keeper */;
+			target = 8F0A5D512E8AD3A700D9D970 /* ChickKeeper */;
 			targetProxy = 8F0A5D612E8AD3A900D9D970 /* PBXContainerItemProxy */;
 		};
 		8F0A5D6C2E8AD3A900D9D970 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8F0A5D512E8AD3A700D9D970 /* Chick Keeper */;
+			target = 8F0A5D512E8AD3A700D9D970 /* ChickKeeper */;
 			targetProxy = 8F0A5D6B2E8AD3A900D9D970 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -478,7 +478,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chick Keeper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chick Keeper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChickKeeper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChickKeeper";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -500,7 +500,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chick Keeper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chick Keeper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChickKeeper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChickKeeper";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;
@@ -550,7 +550,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8F0A5D4D2E8AD3A700D9D970 /* Build configuration list for PBXProject "Chick Keeper" */ = {
+		8F0A5D4D2E8AD3A700D9D970 /* Build configuration list for PBXProject "ChickKeeper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8F0A5D722E8AD3A900D9D970 /* Debug */,
@@ -559,7 +559,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8F0A5D742E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "Chick Keeper" */ = {
+		8F0A5D742E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "ChickKeeper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8F0A5D752E8AD3A900D9D970 /* Debug */,
@@ -568,7 +568,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8F0A5D772E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "Chick KeeperTests" */ = {
+		8F0A5D772E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "ChickKeeperTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8F0A5D782E8AD3A900D9D970 /* Debug */,
@@ -577,7 +577,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8F0A5D7A2E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "Chick KeeperUITests" */ = {
+		8F0A5D7A2E8AD3A900D9D970 /* Build configuration list for PBXNativeTarget "ChickKeeperUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8F0A5D7B2E8AD3A900D9D970 /* Debug */,

@@ -13,7 +13,7 @@ workflows:
         APP_STORE_CONNECT_KEY: chickkeeper_apikey
         APP_STORE_APPLE_ID: 6753183539
         BUNDLE_ID: "com.eggkeeperapp.EggKeeper"
-        XCODE_PROJECT: "Chick Keeper.xcodeproj"    # <-- поменял с workspace на project
+        XCODE_PROJECT: "ChickKeeper.xcodeproj"    # <-- поменял с workspace на project
         XCODE_SCHEME: "Chick Keeper"
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
