@@ -12,7 +12,7 @@ workflows:
       vars:
         APP_STORE_CONNECT_KEY: chickkeeper_apikey
         APP_STORE_APPLE_ID: 6753183539
-        BUNDLE_ID: "com.grouplld.ChickenKeeper"
+        BUNDLE_ID: "com.eggkeeperapp.EggKeeper"
         XCODE_PROJECT: "Chick Keeper.xcodeproj"    # <-- поменял с workspace на project
         XCODE_SCHEME: "Chick Keeper"
     scripts:
