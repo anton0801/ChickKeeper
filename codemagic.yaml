@@ -14,7 +14,7 @@ workflows:
         APP_STORE_APPLE_ID: 6753183539
         BUNDLE_ID: "com.eggkeeperapp.EggKeeper"
         XCODE_PROJECT: "ChickKeeper.xcodeproj"    # <-- поменял с workspace на project
-        XCODE_SCHEME: "Chick Keeper"
+        XCODE_SCHEME: "ChickKeeper"
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
         script: xcode-project use-profiles
