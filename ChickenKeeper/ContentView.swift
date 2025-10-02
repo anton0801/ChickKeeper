@@ -1,14 +1,3 @@
-// ChickenKeeperApp.swift
-// Minimum deployment target: iOS 15.0
-// Use SwiftUI
-// Colors based on provided: Sunny Yellow #FFD93D, Coral Red #FF6B6B, Sky Blue #4A90E2, Grass Green #3DD598, Cream White #FFF9E6
-// Icons: Use SF Symbols where possible, assume custom images for chickens (use placeholders)
-// For weather: Use OpenWeatherMap for current weather only, no forecast
-// Hardcode location to San Francisco for demo (lat=37.7749, lon=-122.4194)
-// User can set API key in APIKeys struct
-// Persistence with UserDefaults
-// No initial data
-
 import SwiftUI
 
 // Hex color extension
@@ -32,7 +21,7 @@ extension Color {
             .sRGB,
             red: Double(r) / 255,
             green: Double(g) / 255,
-            blue:  Double(b) / 255,
+            blue: Double(b) / 255,
             opacity: Double(a) / 255
         )
     }
@@ -167,6 +156,22 @@ struct WeatherData: Codable {
     }
 }
 
+// Mood Ring Model
+struct ChickenMood {
+    let mood: String
+    let animation: String
+    let advice: String
+    let color: Color
+}
+
+// Egg Recipe Model
+struct EggRecipe {
+    let name: String
+    let ingredients: [String]
+    let instructions: String
+    let requiredEggs: Int
+}
+
 // AppData ViewModel
 class AppData: ObservableObject {
     @Published var reminders: [Reminder] = [] {
@@ -178,11 +183,14 @@ class AppData: ObservableObject {
     @Published var expenses: [Expense] = [] {
         didSet { saveExpenses() }
     }
+    @Published var weather: WeatherData?
+    @Published var ingredients: [String] = [] // User-input ingredients for recipes
     
     init() {
         loadReminders()
         loadIncomes()
         loadExpenses()
+        fetchWeather()
     }
     
     private func saveReminders() {
@@ -224,7 +232,6 @@ class AppData: ObservableObject {
         }
     }
     
-    // Computed properties for stats
     func thisWeekProfit() -> Double {
         let thisWeekIncomes = incomes.filter { isThisWeek($0.date) }.reduce(0.0) { $0 + $1.total }
         let thisWeekExpenses = expenses.filter { isThisWeek($0.date) }.reduce(0.0) { $0 + $1.amount }
@@ -278,6 +285,40 @@ class AppData: ObservableObject {
         }
     }
     
+    func getChickenMood() -> ChickenMood {
+        guard let weather = weather else { return ChickenMood(mood: "Unknown", animation: "questionmark", advice: "Check weather settings!", color: .gray) }
+        
+        let temp = weather.main.temp
+        let completedTasks = reminders.filter { $0.isCompleted && Calendar.current.isDateInToday($0.date) }.count
+        let totalTasks = reminders.filter { Calendar.current.isDateInToday($0.date) }.count
+        
+        if temp > 75 && completedTasks < totalTasks / 2 {
+            return ChickenMood(mood: "Overheated", animation: "sun.max.fill", advice: "Provide shade and extra water!", color: .coralRed)
+        } else if temp < 55 && completedTasks < totalTasks / 2 {
+            return ChickenMood(mood: "Chilly", animation: "snowflake", advice: "Add bedding and check coop warmth!", color: .skyBlue)
+        } else if completedTasks == totalTasks && temp >= 55 && temp <= 75 {
+            return ChickenMood(mood: "Happy", animation: "figure.dance", advice: "Great job! Let them free-range!", color: .grassGreen)
+        } else if completedTasks < totalTasks / 2 {
+            return ChickenMood(mood: "Peckish", animation: "leaf.fill", advice: "Complete tasks to keep them fed!", color: .sunnyYellow)
+        } else {
+            return ChickenMood(mood: "Content", animation: "hare.fill", advice: "Keep up the good work!", color: .creamWhite)
+        }
+    }
+    
+    func suggestRecipe() -> EggRecipe? {
+        let totalEggs = thisWeekEggsLaid()
+        let availableIngredients = Set(ingredients.map { $0.lowercased() })
+        
+        if totalEggs >= 6 && availableIngredients.contains("milk") && availableIngredients.contains("butter") {
+            return EggRecipe(name: "Fluffy Omelet", ingredients: ["6 eggs", "1/4 cup milk", "2 tbsp butter", "salt", "pepper"], instructions: "Whisk eggs and milk. Melt butter in a pan, pour in mixture, cook on low heat until set, season to taste.", requiredEggs: 6)
+        } else if totalEggs >= 4 && availableIngredients.contains("flour") && availableIngredients.contains("sugar") {
+            return EggRecipe(name: "Simple Pancakes", ingredients: ["4 eggs", "1 cup flour", "2 tbsp sugar", "1 cup milk", "1 tsp baking powder"], instructions: "Mix all ingredients. Cook spoonfuls on a greased pan until golden on both sides.", requiredEggs: 4)
+        } else if totalEggs >= 2 && availableIngredients.contains("bread") {
+            return EggRecipe(name: "Egg Toast", ingredients: ["2 eggs", "2 slices bread", "butter"], instructions: "Beat eggs, dip bread, fry in butter until golden.", requiredEggs: 2)
+        }
+        return nil
+    }
+    
     private func isThisWeek(_ date: Date) -> Bool {
         Calendar.current.isDate(date, equalTo: Date(), toGranularity: .weekOfYear)
     }
@@ -285,9 +326,24 @@ class AppData: ObservableObject {
     private func isThisMonth(_ date: Date) -> Bool {
         Calendar.current.isDate(date, equalTo: Date(), toGranularity: .month)
     }
+    
+    func fetchWeather() {
+        guard !APIKeys.openWeatherMap.isEmpty else { return }
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=37.7749&lon=-122.4194&units=imperial&appid=\(APIKeys.openWeatherMap)"
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, _, err in
+            if let err = err { return }
+            guard let data = data else { return }
+            do {
+                let decoded = try JSONDecoder().decode(WeatherData.self, from: data)
+                DispatchQueue.main.async { self.weather = decoded }
+            } catch { }
+        }.resume()
+    }
 }
 
-// Custom Bar Chart View
+// Custom Views
 struct BarChart: View {
     let data: [(month: String, income: Double, expenses: Double, profit: Double)]
     let maxValue: Double
@@ -318,7 +374,6 @@ struct BarChart: View {
     }
 }
 
-// Custom Pie Chart View
 struct PieChart: View {
     let slices: [(value: Double, color: Color)]
     
@@ -394,6 +449,7 @@ struct ContentView: View {
 struct DashboardView: View {
     @EnvironmentObject var appData: AppData
     @State private var showingCreateSheet = false
+    @State private var showingIngredientSheet = false
     @State private var toastMessage: String? = nil
     
     var todaysTasks: Int {
@@ -462,8 +518,28 @@ struct DashboardView: View {
                                 .font(.caption)
                         }
                         Spacer()
-                        Text("Sunny")
+                        Text(appData.weather?.weather.first?.description.capitalized ?? "Sunny")
                             .bold()
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(20)
+                    
+                    // Mood Ring
+                    let mood = appData.getChickenMood()
+                    HStack {
+                        Circle()
+                            .fill(mood.color)
+                            .frame(width: 40, height: 40)
+                            .overlay(Image(systemName: mood.animation))
+                        VStack(alignment: .leading) {
+                            Text("Chicken Mood")
+                            Text(mood.mood)
+                                .font(.caption)
+                        }
+                        Spacer()
+                        Text(mood.advice)
+                            .font(.caption)
                     }
                     .padding()
                     .background(Color.white)
@@ -501,11 +577,35 @@ struct DashboardView: View {
                             }
                         }
                     }
+                    
+                    // Egg Recipe Suggestion
+                    if let recipe = appData.suggestRecipe() {
+                        VStack(alignment: .leading) {
+                            Text("Egg Recipe Suggestion")
+                                .font(.headline)
+                            Text("\(recipe.name) (\(recipe.requiredEggs) eggs)")
+                                .font(.title2)
+                            Text("Ingredients: \(recipe.ingredients.joined(separator: ", "))")
+                                .font(.caption)
+                            Text("Instructions: \(recipe.instructions)")
+                                .font(.caption)
+                        }
+                        .padding()
+                        .background(Color.sunnyYellow.opacity(0.3))
+                        .cornerRadius(20)
+                        Button("Add Ingredients") {
+                            showingIngredientSheet = true
+                        }
+                        .padding()
+                        .background(Color.grassGreen)
+                        .cornerRadius(30)
+                        .foregroundColor(.black)
+                    }
                 }
                 .padding()
             }
             .background(Color.creamWhite)
-            .navigationTitle("ChickenKeeper")
+            .navigationTitle("Chick Keeper")
             .sheet(isPresented: $showingCreateSheet) {
                 CreateReminderView { newReminder in
                     appData.reminders.insert(newReminder, at: 0)
@@ -514,6 +614,9 @@ struct DashboardView: View {
                         toastMessage = nil
                     }
                 }
+            }
+            .sheet(isPresented: $showingIngredientSheet) {
+                AddIngredientView()
             }
             .overlay(
                 toastMessage != nil ? Text(toastMessage!)
@@ -717,15 +820,14 @@ struct CreateReminderView: View {
     }
 }
 
-// Weather View - Current weather only
+// Weather View
 struct WeatherView: View {
-    @State private var weather: WeatherData?
-    @State private var error: String?
+    @EnvironmentObject var appData: AppData
     
     var body: some View {
         NavigationView {
             ScrollView {
-                if let weather = weather {
+                if let weather = appData.weather {
                     VStack(spacing: 16) {
                         Text("\(Int(weather.main.temp))°F")
                             .font(.system(size: 60).bold())
@@ -750,13 +852,22 @@ struct WeatherView: View {
                         }
                         .frame(maxWidth: .infinity)
                         
-                        // Chicken Forecast
-                        HStack {
-                            Text("🐔")
-                            Text("Perfect weather for free-range time! Your chickens will love the sunshine.")
+                        let mood = appData.getChickenMood()
+                        VStack(alignment: .leading) {
+                            Text("Chicken Mood")
+                                .font(.headline)
+                            HStack {
+                                Image(systemName: mood.animation)
+                                    .foregroundColor(mood.color)
+                                Text(mood.mood)
+                                    .font(.title2)
+                                Spacer()
+                                Text(mood.advice)
+                                    .font(.caption)
+                            }
                         }
                         .padding()
-                        .background(Color.skyBlue.opacity(0.3))
+                        .background(Color.white)
                         .cornerRadius(20)
                         
                         Text("Weather Alerts")
@@ -773,42 +884,13 @@ struct WeatherView: View {
                             .cornerRadius(20)
                     }
                     .padding()
-                } else if let error = error {
-                    Text(error)
                 } else {
                     Text("Loading weather...")
                 }
             }
             .background(Color.creamWhite)
             .navigationTitle("HenWeather")
-            .onAppear {
-                fetchWeather()
-            }
         }
-    }
-    
-    func fetchWeather() {
-        guard !APIKeys.openWeatherMap.isEmpty else {
-            error = "Set OpenWeatherMap API key in APIKeys struct."
-            return
-        }
-        
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=37.7749&lon=-122.4194&units=imperial&appid=\(APIKeys.openWeatherMap)"
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, err in
-            if let err = err {
-                DispatchQueue.main.async { self.error = err.localizedDescription }
-                return
-            }
-            guard let data = data else { return }
-            do {
-                let decoded = try JSONDecoder().decode(WeatherData.self, from: data)
-                DispatchQueue.main.async { self.weather = decoded }
-            } catch {
-                DispatchQueue.main.async { self.error = error.localizedDescription }
-            }
-        }.resume()
     }
 }
 
@@ -1038,6 +1120,36 @@ struct AddExpenseView: View {
                         }
                     }
                     .disabled(!isValid)
+                }
+            }
+        }
+    }
+}
+
+struct AddIngredientView: View {
+    @EnvironmentObject var appData: AppData
+    @State private var newIngredient: String = ""
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Add Ingredient (e.g., milk, flour)", text: $newIngredient)
+                }
+                Button("Save Ingredient") {
+                    if !newIngredient.trimmingCharacters(in: .whitespaces).isEmpty {
+                        appData.ingredients.append(newIngredient.trimmingCharacters(in: .whitespaces))
+                        newIngredient = ""
+                        dismiss()
+                    }
+                }
+                .disabled(newIngredient.trimmingCharacters(in: .whitespaces).isEmpty)
+            }
+            .navigationTitle("Add Ingredients")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
                 }
             }
         }
